@@ -42,6 +42,25 @@ int str_cmp(const char *s1, const char *s2) {
     return 0;
 }
 
+
+int str_n_cmp(const char *s1, const char *s2, size_t n) {
+
+    while (n != 0) {
+        int s1_char_val = (int) *s1; // ASCII Value of current Char 
+        int s2_char_val = (int) *s2;
+
+        if (s1_char_val < s2_char_val) {
+            return s1_char_val - s2_char_val; // return diffrence=
+        } else if (s1_char_val > s2_char_val) {
+            return s1_char_val - s2_char_val; // return diffrence
+        }
+
+        s1++, s2++, n--;
+    } 
+
+    return 0;
+}
+
 int get_largest_length(const char *s1, const char *s2) {
     int length_s1 = str_len(s1);
     int length_s2 = str_len(s2);
@@ -54,6 +73,16 @@ int get_largest_length(const char *s1, const char *s2) {
 }
 
 int main () {
-        
+
+    const char *s1 = "Hello";
+    const char *s2 =  "ye";
+
+    int test = str_n_cmp(s1,s2,0);
+    int actual = strncmp(s1,s2,0);
+
+    printf("Value of 'test': %d\n", test);
+    printf("Value of 'actual': %d\n", actual);
+
+
     return 0;
 }
