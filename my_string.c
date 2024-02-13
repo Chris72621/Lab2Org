@@ -131,6 +131,7 @@ char * str_cat(char *s1, const char *s2) {
 
     
     
+    return s1;
 }
 
 
