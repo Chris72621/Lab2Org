@@ -42,7 +42,7 @@ int str_cmp(const char *s1, const char *s2) {
     return 0;
 }
 
-
+// TESTED & GOOD
 int str_n_cmp(const char *s1, const char *s2, size_t n) {
 
     while (n != 0) {
@@ -75,7 +75,7 @@ int get_largest_length(const char *s1, const char *s2) {
 /*
     locates the first occurrence of c (converted to a char) in the string pointed to by s.
     return a pointer to the located character, or NULL if the character does not appear in the string.
-*/
+*/ // TESTED & GOOD
 char * str_chr(const char *s, int c){
     while (*s != '\0') {
         if (*s == (char) c) {
@@ -91,7 +91,7 @@ char * str_chr(const char *s, int c){
 /*
     locates in the null-terminated string s the first occurrence of any character in the string charset and returns a pointer to this character.
     If no characters from charset occur anywhere in s strpbrk() returns NULL.
-*/
+*/  // TESTED & GOOD
 char * str_pbrk(const char *s, const char *charset) {
     const char *resetCharSet = charset;
 
@@ -123,28 +123,37 @@ char * str_sep(char **stringp, const char *delim) {
 
 /*
     function appends not more than n characters from s2, and then adds a terminating ‘\0’.
-    return the pointer s1.
-*/
+    return the pointer s1. 
+*/ // TESTED AND DONE
 char * str_cat(char *s1, const char *s2) {
-    int length = str_len(s1) + str_len(s2);
-    char newString [length];
+    char *start = s1; // Need the point of the start of s1 because it doesnt "reset"
 
+    while (*s1) {
+        s1++; // Go to end of s1. "Last Index" 
+    } 
+
+    while (*s2) { // Adding s2 Chars to s1 from s1 "Last Index"
+        *s1 = *s2; // *s1 & *s2 are characters
+        s1++;
+        s2++; 
+    } // Works because s1 doesnt "reset" 
+
+    *s1 = '\0';
     
-    
-    return s1;
+    return start;
 }
 
 
 int main () {
 
-    const char *s1 = "Hello";
-    const char *s2 =  "aaaae";
+    char s1[20] = "Hello";
+    const char *s2 =  "CHANGE";
 
-    char *test = str_pbrk(s1,s2);
-    char *actual = strpbrk(s1,s2);
+    char *test = str_cat(s1,s2);
+    char *actual = strcat(s1,s2);
 
-    printf("Test result: %p\n", (void *)test);
-    printf("Actual result: %p\n", (void *)actual);
+    printf("Test result: %s\n", test);
+    printf("Actual result: %s\n", actual);
 
     return 0;
 }
