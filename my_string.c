@@ -124,7 +124,7 @@ char * str_sep(char **stringp, const char *delim) {
 /*
     function appends not more than n characters from s2, and then adds a terminating ‘\0’.
     return the pointer s1. 
-*/ // TESTED AND DONE
+*/ // TESTED AND
 char * str_cat(char *s1, const char *s2) {
     char *start = s1; // Need the point of the start of s1 because it doesnt "reset"
 
