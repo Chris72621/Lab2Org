@@ -1,8 +1,6 @@
 #include <stdlib.h>
 #include <stdio.h>
-#include <string.h>
 #include "my_string.h"
-
 
 /*
     find length of string - The strnlen() function returns either the same result as strlen() or maxlen, whichever is smaller.
@@ -17,6 +15,22 @@ int str_len(const char *s) {
     }
 
     return length;
+}
+
+/*
+    function copies n bytes from memory area src to memory area dst.
+    returns the original value of dst.
+*/
+void * mem_cpy(void * restrict_dst, const void *restrict_src, size_t n) {
+
+    char *dst = restrict_dst;
+    const char *src = restrict_src;
+
+    for (size_t i = 0; i < n; i++) {
+        *dst++ = *src++;
+    }
+    
+    return restrict_dst;
 }
 
 /*
@@ -116,10 +130,34 @@ char * str_pbrk(const char *s, const char *charset) {
     If the string is empty or the end is reached, it returns NULL.
 */
 char * str_sep(char **stringp, const char *delim) {
+    if (*stringp == NULL) {
+        return NULL;
+    }
 
+    if (**stringp == '\0') {
+        return NULL;
+    }
+
+    char *pointer = *stringp;
+
+    while (*pointer != '\0') {
+        const char *delimReset = delim;
+
+        while (*delimReset) {
+            if (*pointer == *delimReset) {
+                *pointer = '\0';
+                *stringp = pointer + 1;
+                printf("Token: %s\n", *stringp);
+                return *stringp - 1;
+            }
+            delimReset++;
+        }
+        pointer++;
+    }
+
+    *stringp = NULL;
     return NULL;
 }
-
 
 /*
     function appends not more than n characters from s2, and then adds a terminating ‘\0’.
@@ -143,17 +181,9 @@ char * str_cat(char *s1, const char *s2) {
     return start;
 }
 
-
-int main () {
-
-    char s1[20] = "Hello";
-    const char *s2 =  "CHANGE";
-
-    char *test = str_cat(s1,s2);
-    char *actual = strcat(s1,s2);
-
-    printf("Test result: %s\n", test);
-    printf("Actual result: %s\n", actual);
+int main() {
 
     return 0;
 }
+
+
