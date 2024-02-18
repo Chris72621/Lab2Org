@@ -180,10 +180,3 @@ char * str_cat(char *s1, const char *s2) {
     
     return start;
 }
-
-int main() {
-
-    return 0;
-}
-
-
