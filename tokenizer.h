@@ -8,3 +8,8 @@
     Note that the pointers in the return value must point to memory locations within `str`. Therefore, each substring in `str` must be null-terminated, and the pointers must point to the beginning of each substring.
 */
 char **tokenize(char *str, const char *delims);
+
+// Getting the number of k delims + 1
+int get_delim_count(char *str, const char *delims);
+
+char **get_null_arr(int size);

@@ -22,7 +22,6 @@ int str_len(const char *s) {
     returns the original value of dst.
 */
 void * mem_cpy(void * restrict_dst, const void *restrict_src, size_t n) {
-
     char *dst = restrict_dst;
     const char *src = restrict_src;
 
@@ -147,7 +146,6 @@ char * str_sep(char **stringp, const char *delim) {
             if (*pointer == *delimReset) {
                 *pointer = '\0';
                 *stringp = pointer + 1;
-                printf("Token: %s\n", *stringp);
                 return *stringp - 1;
             }
             delimReset++;
@@ -155,7 +153,7 @@ char * str_sep(char **stringp, const char *delim) {
         pointer++;
     }
 
-    *stringp = NULL;
+    *stringp = NULL; // No delims found 
     return NULL;
 }
 
@@ -180,10 +178,3 @@ char * str_cat(char *s1, const char *s2) {
     
     return start;
 }
-
-int main() {
-
-    return 0;
-}
-
-
