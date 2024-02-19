@@ -11,3 +11,5 @@ char **tokenize(char *str, const char *delims);
 
 // Getting the number of k delims + 1
 int get_delim_count(char *str, const char *delims);
+
+char **get_null_arr(int size);
