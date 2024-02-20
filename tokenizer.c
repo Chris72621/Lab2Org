@@ -67,16 +67,3 @@ char **get_null_arr(int size) {
     return nulled_arr;
 }
 
-int main() {
-    char str[] = "Dodge,Challenger.Charger/Durango";
-    const char *delims = ",./";
-
-    char **tokens = tokenize(str, delims);
-
-    printf("Tokens:\n");
-    for (int i = 0; tokens[i] != NULL; i++) {
-        printf("%d: %s\tAddress: %p\n", i, tokens[i], (void *)tokens[i]);
-    }
-
-    return 0;
-}
