@@ -37,12 +37,14 @@ int AL_free(ArrayList_t *AL, int (*delete_data)(void *)){
     return 0;
 }
 
-void AL_print(ArrayList_t *AL, void (*print_data)(void *)){
-    ArrayList_t *size, *data;
-    
-    while (AL -> size != 0) {
-        print_data(AL -> data);
-        AL -> size--;
+void AL_print(ArrayList_t *AL, void (*print_data)(void *)) {
+    if (AL == NULL || AL->size == 0) {
+        printf("ArrayList is empty.\n");
+        return;
+    }
+
+    for (int i = 0; i < AL->size; i++) {
+        print_data(AL->data[i]);
     }
 }
 
@@ -120,18 +122,22 @@ int AL_delete_first(ArrayList_t *AL, int (*delete_data)(void *)) {
     return 0; // Success
 }
 
-int AL_insert_last(ArrayList_t *AL, void *elem, void*(*copy_data)(void *)){
+int AL_insert_last(ArrayList_t *AL, void *elem, void*(*copy_data)(void *)) {
+    if (AL == NULL || elem == NULL) {
+        return 1; // Invalid ArrayList or element
+    }
     
-    if(copy_data == NULL || AL -> size == 0){
+    AL->size++;
+    void **new_data = realloc(AL->data, AL->size * sizeof(void *));
+    if (new_data == NULL) {
+        // Memory reallocation failed, rollback size
+        AL->size--;
         return 1;
     }
-    if(copy_data != NULL){
-        AL -> size++;
-        void **new_data = realloc(AL->data, AL->size * sizeof(void *));
-        AL -> data[(AL -> size)-1] = copy_data(elem);
-        return 0;
-    }
-    return 1;
+    
+    AL->data = new_data;
+    AL->data[AL->size - 1] = copy_data(elem);
+    return 0; // Success
 }
 
 int AL_delete_last(ArrayList_t *AL, int (*delete_data)(void *)){
@@ -176,17 +182,30 @@ int AL_insert_at(ArrayList_t *AL, size_t i, void *elem, void *(*copy_data)(void 
     return 0;
 }
 
-int AL_delete_at(ArrayList_t *AL, size_t i, int (*delete_data)(void*)){
-    if (delete_data == NULL){
-        return 1;
+int AL_delete_at(ArrayList_t *AL, size_t i, int (*delete_data)(void*)) {
+    if (AL == NULL || delete_data == NULL || i >= AL->size) {
+        return 1; // Invalid ArrayList, delete_data is NULL, or index out of bounds
     }
     
-    if (i > AL -> size){
-        return 1;
+    // Delete data at index i
+    delete_data(AL->data[i]);
+    
+    // Shift remaining elements to the left
+    for (size_t j = i; j < AL->size - 1; j++) {
+        AL->data[j] = AL->data[j + 1];
     }
     
-    delete_data(AL -> data[i]);
-    AL-> data = realloc(AL-> data, (AL-> size - 1) * sizeof(void *));
-    AL -> size--;
-    return 0;
+    // Resize the data array
+    void **new_data = realloc(AL->data, (AL->size - 1) * sizeof(void *));
+    if (new_data == NULL && AL->size > 1) {
+        return 1; // Memory reallocation failed
+    }
+    
+    AL->data = new_data;
+    AL->size--;
+    
+    return 0; // Success
 }
+
+
+
