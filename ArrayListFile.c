@@ -1,3 +1,7 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include "ArrayListFile.h"
+
 ArrayList_t *AL_init(void){
     ArrayList_t *arraylist;
     
