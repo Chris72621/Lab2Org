@@ -1,5 +1,5 @@
 CC   = cc
-OBJS = ArrayList.o my_string.o tokenizer.0
+OBJS = ArrayList.o my_string.o tokenizer.o
 
 CFLAGS = -O3 -g3 -Wall -Wextra -Werror=format-security -Werror=implicit-function-declaration \
          -Wshadow -Wpointer-arith -Wcast-align -Wstrict-prototypes -Wwrite-strings
