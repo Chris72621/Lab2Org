@@ -1,3 +1,6 @@
+#ifndef __TOKENIZER_H__
+#define __TOKENIZER_H__
+
 /*
     This function takes two pointers:
     - str: An array of characters to be split into tokens based on delimiter characters.
@@ -13,3 +16,5 @@ char **tokenize(char *str, const char *delims);
 int get_delim_count(char *str, const char *delims);
 
 char **get_null_arr(int size);
+
+#endif

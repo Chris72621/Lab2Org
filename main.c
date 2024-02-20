@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 
 static char *randstring(size_t length) {
   static char charset[] =
