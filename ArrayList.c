@@ -38,7 +38,7 @@ int AL_free(ArrayList_t *AL, int (*delete_data)(void *)){
 }
 
 void AL_print(ArrayList_t *AL, void (*print_data)(void *)) {
-    if (AL == NULL || AL->size == 0) {
+    if (AL == NULL) {
         printf("ArrayList is empty.\n");
         return;
     }
@@ -206,6 +206,5 @@ int AL_delete_at(ArrayList_t *AL, size_t i, int (*delete_data)(void*)) {
     
     return 0; // Success
 }
-
 
 
