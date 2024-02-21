@@ -129,28 +129,31 @@ char * str_pbrk(const char *s, const char *charset) {
     If the string is empty or the end is reached, it returns NULL.
 */
 char * str_sep(char **stringp, const char *delim) {
-    if (*stringp == NULL) {
+    if (stringp == NULL || *stringp == NULL) {
         return NULL;
     }
 
-    if (**stringp == '\0') {
-        return NULL;
-    }
+    char *start_pointer = *stringp;
+    char *end_pointer = *stringp;
+    const char *delim_pointer;
 
-    char *pointer = *stringp;
+    while (*end_pointer != '\0') {
+        delim_pointer = delim;
 
-    while (*pointer != '\0') {
-        const char *delimReset = delim;
-
-        while (*delimReset) {
-            if (*pointer == *delimReset) {
-                *pointer = '\0';
-                *stringp = pointer + 1;
-                return *stringp - 1;
+        while (*delim_pointer != '\0') {
+            if (*end_pointer == *delim_pointer) {
+                *end_pointer = '\0';
+                *stringp = end_pointer + 1;
+                return start_pointer;
             }
-            delimReset++;
+            delim_pointer++;
         }
-        pointer++;
+        end_pointer++;
+    }
+
+    if (*start_pointer == '\0') {
+        *stringp = NULL;
+        return NULL;
     }
 
     *stringp = NULL; // No delims found 

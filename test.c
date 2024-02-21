@@ -856,7 +856,7 @@ static double test_str_cat(void) {
 
 static double test_tokenize(void) {
   size_t passed = 0;
-  const double points = 4.;
+  const double points = 15.;
 
   char **t1, **t2;
   char *s1, *s2;
@@ -959,7 +959,7 @@ int main(void) {
     }
   }
 
-  printf("%f\n", total_points);
+  printf("Total: %f\n", total_points);
 
   munmap(func_points, sizeof *func_points);
 
