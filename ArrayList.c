@@ -38,8 +38,7 @@ int AL_free(ArrayList_t *AL, int (*delete_data)(void *)){
 }
 
 void AL_print(ArrayList_t *AL, void (*print_data)(void *)) {
-    if (AL == NULL || AL->size == 0) {
-        printf("ArrayList is empty.\n");
+    if (AL == NULL) {
         return;
     }
 
