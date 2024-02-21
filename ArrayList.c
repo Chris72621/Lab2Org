@@ -156,29 +156,30 @@ int AL_insert_at(ArrayList_t *AL, size_t i, void *elem, void *(*copy_data)(void 
         return 1; // Return 1 indicating failure
     }
     
-    AL->size++;
-    if (i > AL-> size) {
-        AL-> data = realloc(AL-> data, AL-> size * sizeof(void *));
-        if (AL-> data == NULL) {
+    // Check if i is out of bounds, if so, insert at the end
+    if (i >= AL->size) {
+        AL->size++;
+        AL->data = realloc(AL->data, AL->size * sizeof(void *));
+        if (AL->data == NULL) {
             return 1; // Return 1 indicating failure
         }
-        AL-> data[AL-> size - 1] = copy_data(elem); // Add elem at the end of the list
+        AL->data[AL->size - 1] = copy_data(elem); // Add elem at the end of the list
         return 0; // Return 0 indicating success
     }
     
-    AL-> data = realloc(AL-> data, AL-> size * sizeof(void *));
-    if (AL-> data == NULL) {
+    // Shift elements to make space for the new element
+    AL->size++;
+    AL->data = realloc(AL->data, AL->size * sizeof(void *));
+    if (AL->data == NULL) {
         return 1; // Return 1 indicating failure
     }
-    
-    // Shift elements to make space for the new element
-    for (int location = AL-> size; location > i; location--) {
-        AL-> data[location] = AL-> data[location - 1];
+    for (int location = AL->size - 1; location > i; location--) {
+        AL->data[location] = AL->data[location - 1];
     }
     
-    AL-> data[i] = copy_data(elem);
-    AL -> size++;
-    return 0;
+    // Insert the new element at index i
+    AL->data[i] = copy_data(elem);
+    return 0; // Return 0 indicating success
 }
 
 int AL_delete_at(ArrayList_t *AL, size_t i, int (*delete_data)(void*)) {
